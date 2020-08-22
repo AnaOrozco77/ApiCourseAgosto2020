@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "dac3eafd-4a10-4f89-a332-c2583922ffb3",
+		"name": "PracticaSpotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Info Usuario Actual",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ee44430-71a3-4fcd-8f8b-12c90a869d06",
+						"exec": [
+							"pm.test (\"Varidar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta JSON\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta No Vacia\", function(){\r",
+							"    pm.response.to.not.empty;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta Contenga Campo 'email'\", function() {\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\")\r",
+							"})\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Impresion del UserID: \", jsonData.id)\r",
+							"\r",
+							"pm.environment.set(\"UserID\",jsonData.id)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/me",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener PlayList Usuario Actual",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f53fdad-4abc-4625-86ac-6d0bc7dcf557",
+						"exec": [
+							"pm.test(\"Validar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta JSON\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Contenga Texto\", function() {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Legendarios del rock en español\")\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Data: \", jsonData)\r",
+							"//console.log(\"Data: \", jsonData.items[4].name)\r",
+							"pm.test(\"Encontrar Playlist Name\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"Adriel\");\r",
+							"})\r",
+							"//pm.environment.set(\"UserID\",jsonData.id)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.spotify.com/v1/me/playlists",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Playlist de Un Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "996c65e8-7bd1-456c-9287-999665d5d4a2",
+						"exec": [
+							"pm.test(\"Validar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta JSON\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"// Utilizando el ID de un usuario: https://api.spotify.com/v1/users/wp3hyupxa85gomn86q69zksd9\r",
+							"pm.test(\"Validar Contenga Texto\", function() {\r",
+							"    pm.expect(pm.response.text()).to.include(\"La música, bendita compañía.\")\r",
+							"})\r",
+							"\r",
+							"// Utilizando una variable con el ID del usuario: https://api.spotify.com/v1/users/{{UserID}}\r",
+							"//pm.test(\"Validar Contenga Texto\", function() {\r",
+							"  //  pm.expect(pm.response.text()).to.include(\"Legendarios del rock en español\")\r",
+							"//})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/users/wp3hyupxa85gomn86q69zksd9",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						"wp3hyupxa85gomn86q69zksd9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PlayList Individual",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f6df1ef-499c-4959-b4c4-69704afcd02c",
+						"exec": [
+							"pm.test(\"Validar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta JSON\", function() {\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Contenga Texto\", function() {\r",
+							"    pm.expect(pm.response.text()).to.include(\"La música, bendita compañía\")\r",
+							"})\r",
+							"\r",
+							"//var jsonData = pm.response.json();\r",
+							"//console.log(\"Impresion de Respuesta JSON: \", jsonData)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/07mfBOTN3ddXu9ToOhdEft",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"07mfBOTN3ddXu9ToOhdEft"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PlayList - Tracks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e32b1938-1dc1-42a9-8c9f-da2d259cd0be",
+						"exec": [
+							"pm.test (\"Varidar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta JSON\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta No Vacia\", function(){\r",
+							"    pm.response.to.not.empty;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/37i9dQZF1DWYN0zdqzbEwl/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"37i9dQZF1DWYN0zdqzbEwl",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Track",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b7c2f73e-7df6-43f1-aad1-b447c9e45c64",
+						"exec": [
+							"pm.test (\"Varidar Estatus 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Respuesta No Vacia\", function(){\r",
+							"    pm.response.to.not.empty;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar Contenga Texto\", function() {\r",
+							"    pm.expect(pm.response.text()).to.include(\"How Can I Tell You\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAQrMSYLGPFT3bunRV-tkV3AashyaZ0BDs0Ojwxu8n_L-AOt5QHkJmzZ8P6pi0at4C_hmhIC5gqh33k4Hh3UNsff8g52r0H6Da4nIA0hLjKut_lafXn_MBOd2cCEpwTLfC4mVDG_3TXJJMpWtxzuz5RBVgzpBIgY6jeST223zMYsmQvozBfBm240r_8XIh47V4AniZ1UJH5k5W3pcLPpwlOEHZYgDjWLREOKzjKdrqkVBZLmSp3F3lywOkzobzsvDbXQeEHeoCUfhCGFkur_Ztn3ZR0lN21eIqBJ5q4dF-iZQQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://open.spotify.com/track/0tTEewiwJ8WpQrFE7MWHBj?si=ktAH_vvpTb67Ni6uAvWRow",
+					"protocol": "https",
+					"host": [
+						"open",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"track",
+						"0tTEewiwJ8WpQrFE7MWHBj"
+					],
+					"query": [
+						{
+							"key": "si",
+							"value": "ktAH_vvpTb67Ni6uAvWRow"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
